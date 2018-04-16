@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 public class UVA_11057 {
     public static void main(String[] args) throws Exception{
-        solutionEfficient();
+        solutionEfficientV10();
     }
         
     public static void solutionBruteForce(){
@@ -50,7 +50,7 @@ public class UVA_11057 {
         }
     }
    
-    public static void solutionEfficient(){
+    public static void solutionEfficientV10(){
         Scanner s=new Scanner(System.in);
 
         while(s.hasNext()){
@@ -76,11 +76,43 @@ public class UVA_11057 {
                     iMax=i;
                     jMax=pos;
                 }
-
             }
-
             System.out.println("Peter should buy books whose prices are "+books[iMax]+" and "+books[jMax]+".\n");
         }
     }
         
+    /***
+     * Not working since binarySearch don't guarantees which element will be found
+     * when there are duplicated elements in the array....
+     */
+    public static void solutionEfficientV20(){
+        Scanner s=new Scanner(System.in);
+
+        while(s.hasNext()){
+            int N=s.nextInt();
+            int[] books=new int[N];
+
+            for(int i=0;i<N;i++){
+                books[i]=s.nextInt();
+            }
+
+            int M=s.nextInt();
+            Arrays.sort(books);
+
+            int D;
+
+            int posHalf = Arrays.binarySearch(books, M/2);
+            boolean found=false;
+            for(int i=posHalf;i>=0 && !found;i--){
+                D=M-books[i];
+                int pos=Arrays.binarySearch(books,posHalf,N,D);
+
+                if(pos>=0 && pos!=i){ /*Number which sum is M found*/
+                    System.out.println("Peter should buy books whose prices are "+books[i]+" and "+books[pos]+".\n");
+                    found=true;
+                }
+            }
+        }
+    }
+       
 }
