@@ -56,7 +56,7 @@ public class QuadTreeTest {
         QuadTreeGrid qtg2 = new QuadTreeGrid(tC2);
 
         char[][] tC3 = {
-            {'P', 'q'},
+            {'p', 'q'},
             {'t', 'u'}
         };
         QuadTreeGrid qtg3 = new QuadTreeGrid(tC3);

@@ -9,9 +9,15 @@ import java.awt.Dimension;
 public class QuadTreeGrid {
 
     private final char[][] grid;
-
+    Dimension dim;
+    
     public QuadTreeGrid(char[][] grid) {
         this.grid = grid;
+        if (grid != null) {
+            this.dim = new Dimension(grid[0].length, grid.length);
+        } else {
+            this.dim = new Dimension(0, 0);
+        }
     }
 
     public QuadTreeGrid subGrid(int tlx, int tly, int brx, int bry) {
@@ -43,11 +49,7 @@ public class QuadTreeGrid {
     }
 
     public Dimension getDim() {
-        if (grid != null) {
-            return new Dimension(grid[0].length, grid.length);
-        } else {
-            return new Dimension(0, 0);
-        }
+        return dim;
     }
 
     public char get(int x, int y) {
