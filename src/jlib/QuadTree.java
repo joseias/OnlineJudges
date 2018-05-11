@@ -41,20 +41,20 @@ public class QuadTree {
 
         int tlx0 = 0;
         int tly0 = 0;
-        int brx0 =  gd.width / 2;
-        int bry0 =  gd.height / 2;
+        int brx0 = ((gd.width + 1) / 2) - 1;
+        int bry0 = ((gd.height + 1) / 2) - 1;
         quads[0] = qtg.subGrid(tlx0, tly0, brx0, bry0);
 
         int tlx1 = brx0 + 1;
         int tly1 = 0;
-        int brx1 = gd.width;
+        int brx1 = gd.width - 1;
         int bry1 = bry0;
         quads[1] = qtg.subGrid(tlx1, tly1, brx1, bry1);
 
         int tlx2 = 0;
-        int tly2 = tly0 + 1;
+        int tly2 = bry0 + 1;
         int brx2 = brx0;
-        int bry2 = gd.height;
+        int bry2 = gd.height - 1;
         quads[2] = qtg.subGrid(tlx2, tly2, brx2, bry2);
 
         int tlx3 = tlx1;
