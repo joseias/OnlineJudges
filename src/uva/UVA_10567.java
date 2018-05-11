@@ -21,9 +21,6 @@ public class UVA_10567 {
             for(int i=0;i<querys;i++){
                 String q=sc.nextLine();
             }
-                    
-     
-        
         }
         
         public static int getCode(char a){
