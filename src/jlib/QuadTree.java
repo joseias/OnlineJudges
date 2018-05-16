@@ -1,9 +1,11 @@
 package jlib;
 
 import java.awt.Dimension;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * Inefficient by easy to implement QuadTree
+ * Inefficient but easy to implement QuadTree compressing homogeneous quadrants
  *
  * @author Docente
  */
@@ -12,26 +14,66 @@ public class QuadTree {
     private final int MAX_CHILDS = 4;
     QuadTree parent;
     QuadTree[] childs;
+    QuadTreeGrid grid;
+    
     char value;
-    boolean nullQuad = true;
-
+//    boolean nullQuad = true;
+    boolean isLeaf = true;
+    
     public QuadTree(QuadTreeGrid qtg) {
-        if (qtg.size() == 0) {
-            this.nullQuad = true;
-        } else {
+        
+        if (qtg.size()> 0) {
+            this.grid = qtg;
             if (qtg.size() == 1) {
-                this.nullQuad = false;
                 this.value = qtg.get(0, 0);
+                this.isLeaf = true;
             } else {
-                childs = new QuadTree[MAX_CHILDS];
+                this.childs = new QuadTree[MAX_CHILDS];
                 QuadTreeGrid[] quads = this.quadPartionateGrid(qtg);
-                childs[0] = new QuadTree(quads[0]);
-                childs[1] = new QuadTree(quads[1]);
-                childs[2] = new QuadTree(quads[2]);
-                childs[3] = new QuadTree(quads[3]);
+                if(quads[0].size()>0){
+                    this.childs[0] = new QuadTree(quads[0]);
+                }
+                if(quads[1].size()>0){
+                    this.childs[1] = new QuadTree(quads[1]);
+                }
+                if(quads[2].size()>0){
+                    this.childs[2] = new QuadTree(quads[2]);
+                }
+                if(quads[3].size()>0){
+                    this.childs[3] = new QuadTree(quads[3]);
+                }
+
+                /*In a grid of size > 1, always will be a first child*/
+                char tmpValue = childs[0].value;
+                boolean sameValue = childs[0].isLeaf;
+                
+                if(childs[1]!=null && childs[1].value !=tmpValue){
+                    sameValue = false;
+                }
+                
+                if(childs[2]!=null && childs[2].value !=tmpValue){
+                    sameValue = false;
+                }
+                
+                if(this.childs[3]!=null && this.childs[3].value !=tmpValue){
+                    sameValue = false;
+                }
+                if(sameValue){
+                    this.value = tmpValue;
+                    this.isLeaf = true;
+                    this.childs[0]=null;
+                    this.childs[1]=null;
+                    this.childs[2]=null;
+                    this.childs[3]=null;
+                }
+                else{
+                    this.isLeaf = false;
+                }
             }
         }
-
+        else {
+            System.err.println("Empty grid...");
+        }
     }
 
     public QuadTreeGrid[] quadPartionateGrid(QuadTreeGrid qtg) {
@@ -66,8 +108,27 @@ public class QuadTree {
         return quads;
     }
 
-    public static void main(String[] args) {
-
+    public List<Character> prefix(){
+        List<Character> result = new ArrayList<>(this.grid.size());
+        
+        if(!this.isLeaf){
+            result.add('D');
+            if(this.childs[0]!=null){
+                result.addAll(this.childs[0].prefix());
+            }
+            if(this.childs[1]!=null){
+                result.addAll(this.childs[1].prefix());
+            }
+            if(this.childs[2]!=null){
+                result.addAll(this.childs[2].prefix());
+            }
+            if(this.childs[3]!=null){
+                result.addAll(this.childs[3].prefix());
+            }
+        }
+        else{
+            result.add(this.value);
+        }
+        return result;
     }
-
 }

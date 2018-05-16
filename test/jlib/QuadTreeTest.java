@@ -5,10 +5,10 @@
  */
 package jlib;
 
+import java.util.ArrayList;
+import java.util.List;
 import org.junit.Test;
 import static org.junit.Assert.*;
-import org.junit.Before;
-import org.junit.BeforeClass;
 
 /**
  *
@@ -63,13 +63,42 @@ public class QuadTreeTest {
 
         QuadTreeGrid[] expResult = {qtg0, qtg1, qtg2, qtg3};
 
-        QuadTree qt = new QuadTree(new QuadTreeGrid(null));
+        QuadTree qt = new QuadTree(qtg);
 
         QuadTreeGrid[] result = qt.quadPartionateGrid(qtg);
-        
-        QuadTree qtf = new QuadTree(new QuadTreeGrid(gC));
         
         assertArrayEquals(expResult, result);
     }
 
+    /**
+     * Test of prefix method, of class QuadTree.
+     */
+    @Test
+    public void testPrefix() {
+        System.out.println("prefix");
+         char[][] gC = {
+            {'0', '0', '1', '0'},
+            {'0', '0', '0', '1'},
+            {'1', '0', '1', '1'}
+        };
+        QuadTreeGrid qtg = new QuadTreeGrid(gC);
+        QuadTree qt = new QuadTree(qtg);
+        
+        List<Character> result =  qt.prefix();
+        
+        List<Character> expResult = new ArrayList<>();
+        expResult.add('D');
+        expResult.add('0');
+        expResult.add('D');
+        expResult.add('1');
+        expResult.add('0');
+        expResult.add('0');
+        expResult.add('1');
+        expResult.add('D');
+        expResult.add('1');
+        expResult.add('0');
+        expResult.add('1');
+        
+        assertEquals(expResult, result);
+    }
 }
