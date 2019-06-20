@@ -1,9 +1,5 @@
 package jlib;
 
-/**
- *
- * @author Docente
- */
 public class EDLevenshtein {
     
     public static final int INS_COST=1;

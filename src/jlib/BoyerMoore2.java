@@ -3,10 +3,6 @@
  */
 package jlib;
 
-/**
- *
- * @author Someone
- */
 public class BoyerMoore2 {
     
     public final int ALPHABET_SIZE=Character.MAX_VALUE;

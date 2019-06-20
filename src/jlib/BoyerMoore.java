@@ -10,6 +10,7 @@ package jlib;
 public class BoyerMoore {
      
     public final int ALPHABET_SIZE=Character.MAX_VALUE;
+    
     public static void main(String[] args){
         String t="GCATCGCAGAGAGTATACAGTACG";
         String p="GCAGAGAG";
@@ -101,7 +102,7 @@ public class BoyerMoore {
         
         
         int j=0;
-        int i=0;
+        int i;
         while(j<n-m){
             for(i=m-1;i>=0 && pattern[i]==text[i+j];--i);
             
